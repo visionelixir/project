@@ -1,4 +1,5 @@
 {
+  "globalSetup": "../jest.setup.ts",
   "rootDir": "src",
   "moduleFileExtensions": [
     "js",
