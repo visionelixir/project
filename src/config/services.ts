@@ -16,6 +16,6 @@ export const SERVICES_CONFIG = {
       'collector',
       'database',
     ],
-    project: ['core', 'auth', 'home'],
+    project: ['core', 'home'],
   },
 }

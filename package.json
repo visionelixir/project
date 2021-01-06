@@ -18,11 +18,11 @@
     "environment:build": "cp ./src/.production.environment ./dist/.environment",
     "build:clear": "rm -rf ./dist",
     "check": "npm run lint && tsc --noEmit",
-    "public:build": "cp -r ./src/public ./dist/vision",
+    "public:build": "cp -r ./src/public ./dist/public",
     "build": "npm run lint && npm test && npm run build:clear && npm run typescript:build && npm run scss:build && npm run views:build && npm run environment:build && npm run public:build"
   },
   "dependencies": {
-    "@visionelixir/framework": "0.0.2"
+    "@visionelixir/framework": "0.0.4"
   },
   "devDependencies": {
     "@types/koa": "^2.11.6",
