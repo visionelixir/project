@@ -21,7 +21,9 @@
     "public:build": "cp -r ./src/public ./dist/vision",
     "build": "npm run lint && npm test && npm run build:clear && npm run typescript:build && npm run scss:build && npm run views:build && npm run environment:build && npm run public:build"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@visionelixir/framework": "0.0.2"
+  },
   "devDependencies": {
     "@types/koa": "^2.11.6",
     "@types/koa-static": "^4.0.1",
