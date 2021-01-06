@@ -1,0 +1,22 @@
+{% macro NavItem(item, current, baseUri = '/') %}
+    <li {% if (current === baseUri + item.uri) %}class="active"{% endif %}>
+        <a href="{{ baseUri + item.uri }}">{{ item.name }}</a>
+        {% if item.children.length %}
+            <ul>
+                {% for child in item.children %}
+                    {{ NavItem(child, current, baseUri + item.uri + '/') }}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </li>
+{% endmacro %}
+
+{% macro Nav(nav, current) %}
+<nav>
+    <ul>
+        {% for item in nav %}
+            {{ NavItem(item, current) }}
+        {% endfor %}
+    </ul>
+</nav>
+{% endmacro %}

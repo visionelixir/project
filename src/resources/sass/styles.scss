@@ -1,0 +1,113 @@
+@import './normalize';
+
+$colors: (
+        brand-1: #9ebf16,
+        brand-2: #9b4ed4,
+        brand-3: #58dcff,
+        brand-4: #ff8000,
+        brand-5: #d23333,
+        brand-6: #222222,
+        brand-7: #f4f4f4,
+);
+
+$font: 'Montserrat', sans-serif;
+
+@function getBrandColor($name) {
+  @return map-get($colors, $name);
+}
+
+@function tint($color, $percentage) {
+  @return mix(white, $color, $percentage);
+}
+
+@function shade($color, $percentage) {
+  @return mix(black, $color, $percentage);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: getBrandColor(brand-7);
+  font-family: $font;
+  color: getBrandColor(brand-6);
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  align-items: center;
+}
+
+header, footer {
+  flex: 0 0 60px;
+}
+
+.page {
+  display: flex;
+  flex: 1 0 auto;
+  width: 90%;
+  flex-direction: column;
+}
+
+.center-box {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  justify-content: center;
+  flex: 1;
+
+  &--content-centered {
+    align-items: center;
+  }
+}
+
+.title-message {
+  margin: 0;
+  font-size: 60px;
+  color: getBrandColor(brand-6);
+  font-weight: 200;
+  position: relative;
+  letter-spacing: -0.06em;
+}
+
+.sub-message {
+  color: tint(getBrandColor(brand-6), 50%);
+  font-weight: 300;
+  margin: 0;
+
+  &--center {
+    text-align: center;
+  }
+}
+
+.color {
+  @each $name, $color in $colors {
+    $i: index($colors, $color);
+
+    &--#{$name} {
+      color: $color
+    }
+  }
+}
+
+.box {
+  width: 1000px;
+  height: 1000px;
+  transform: rotate(36deg);
+  background: getBrandColor(brand-6);
+  position: absolute;
+  top: -850px;
+  left: -710px;
+  animation: fade 10s infinite;
+
+  &--2 {
+    transform: rotate(50deg);
+    top: -850px;
+    left: -670px;
+    background: getBrandColor(brand-3);
+  }
+}

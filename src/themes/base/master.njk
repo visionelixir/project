@@ -1,0 +1,28 @@
+{% from "modules/NavGenerator.njk" import Nav %}
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="{{ page.description }}">
+        <meta name="keywords" content="{{ page.keywords }}">
+        <meta name="author" content="Glacial">
+
+        <title>{{ page.title }}</title>
+
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/styles.css?v=1.0">
+    </head>
+
+    <body>
+        <header>
+            {{ Nav(navs.main, request.url) }}
+        </header>
+        <section class="page">{% block page %}{% endblock %}</section>
+        <footer>
+            {{ Nav(navs.footer, request.url) }}
+        </footer>
+        <div class="box box--1"></div>
+        <div class="box box--2"></div>
+    </body>
+</html>
