@@ -2,7 +2,7 @@ export const SERVICES_CONFIG = {
   file: 'Service',
   directory: 'services',
   require: {
-    ve: [
+    visionElixir: [
       'container',
       'config',
       'logging',
