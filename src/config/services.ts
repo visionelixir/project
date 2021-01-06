@@ -4,8 +4,9 @@ export const SERVICES_CONFIG = {
   require: {
     ve: [
       'container',
+      'config',
+      'logging',
       'zone',
-      'logger',
       'app',
       'event',
       'error',
@@ -14,7 +15,6 @@ export const SERVICES_CONFIG = {
       'view',
       'collector',
       'database',
-      'config',
     ],
     project: ['core', 'auth', 'home'],
   },
