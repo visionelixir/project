@@ -6,7 +6,7 @@
   "license": "ISC",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "ts-node-dev --clear --quiet --rs --transpile-only --watch **/*.njk,**/*.environment src/index.ts --environment=development",
+    "dev": "ts-node-dev --quiet --rs --transpile-only --watch **/*.njk,**/*.environment src/index.ts --environment=development",
     "start": "node dist/index.js --production",
     "test": "jest --config=jest.config.json",
     "lint": "eslint ./src --ext ts",
@@ -22,22 +22,23 @@
     "build": "npm run lint && npm test && npm run build:clear && npm run typescript:build && npm run scss:build && npm run views:build && npm run environment:build && npm run public:build"
   },
   "dependencies": {
-    "@visionelixir/framework": "0.0.8"
+    "@visionelixir/framework": "0.0.9",
+    "ts-node-dev": "^1.1.1"
   },
   "devDependencies": {
     "@types/koa": "^2.11.6",
     "@types/koa-static": "^4.0.1",
-    "@typescript-eslint/eslint-plugin": "^4.9.1",
-    "@typescript-eslint/parser": "^4.9.1",
-    "eslint": "^7.15.0",
-    "eslint-config-prettier": "^7.0.0",
-    "eslint-plugin-prettier": "^3.2.0",
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
+    "eslint": "^7.18.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
     "jest": "^26.6.3",
     "node-sass": "^5.0.0",
+    "nodemon": "^2.0.7",
     "prettier": "^2.2.1",
     "ts-jest": "^26.4.4",
     "ts-node": "^9.1.1",
-    "ts-node-dev": "^1.1.1",
     "typescript": "^4.1.3"
   }
 }
