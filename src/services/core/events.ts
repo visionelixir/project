@@ -9,7 +9,7 @@ import {
 } from '@visionelixir/framework'
 import { websiteErrorHandler } from './utils/error-handler'
 
-export default () => {
+export default (): void => {
   Emitter.on(
     VisionElixirLocalEvents.RESPONSE_ERROR,
     async (event: VisionElixirEvent): Promise<void> => {
