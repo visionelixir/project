@@ -1,13 +1,13 @@
-import { EmitterFacade as Emitter } from '@visionelixir/framework/dist/services/event/facade/EmitterFacade'
 import {
   Context,
   VisionElixirEvent,
   VisionElixirLocalEvents,
+  EmitterFacade as Emitter,
+  ZoneFacade as Zone,
+  LoggerFacade as Logger,
+  CollectorFacade as Collector,
 } from '@visionelixir/framework'
 import { websiteErrorHandler } from './utils/error-handler'
-import { ZoneFacade as Zone } from '@visionelixir/framework/dist/services/zone/facades/ZoneFacade'
-import { LoggerFacade as Logger } from '@visionelixir/framework/dist/services/logging/facades/LoggerFacade'
-import { CollectorFacade as Collector } from '@visionelixir/framework/dist/services/collector/facades/CollectorFacade'
 
 export default () => {
   Emitter.on(
