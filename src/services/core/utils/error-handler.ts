@@ -3,6 +3,7 @@ import {
   ViewFacade as View,
   ConfigFacade as Config,
   VisionElixirError,
+  HttpStatus,
 } from '@visionelixir/framework'
 
 export const websiteErrorHandler = async (
@@ -10,9 +11,9 @@ export const websiteErrorHandler = async (
   error: Error,
   ctx: KeyValue,
 ): Promise<void> => {
-  if (error && statusCode === 404) {
-    ctx.status = 500
-    statusCode = 500
+  if (error && statusCode === HttpStatus.NOT_FOUND) {
+    ctx.status = HttpStatus.INTERNAL_SERVER_ERROR
+    statusCode = HttpStatus.INTERNAL_SERVER_ERROR
   }
 
   ctx.status = statusCode
@@ -42,15 +43,15 @@ export const apiErrorHandler = (
   error: VisionElixirError<unknown> | null,
   ctx: KeyValue,
 ): void => {
-  if (error && statusCode === 404) {
-    ctx.status = 500
-    statusCode = 500
+  if (error && statusCode === HttpStatus.NOT_FOUND) {
+    ctx.status = HttpStatus.INTERNAL_SERVER_ERROR
+    statusCode = HttpStatus.INTERNAL_SERVER_ERROR
   }
 
   ctx.status = statusCode
 
   switch (statusCode) {
-    case 500:
+    case HttpStatus.INTERNAL_SERVER_ERROR:
       if (Config.debug && error) {
         const { name, type, message, payload, stack } = error
 
@@ -65,7 +66,7 @@ export const apiErrorHandler = (
         ctx.body = { error: "That's an error :(" }
       }
       break
-    case 404:
+    case HttpStatus.NOT_FOUND:
       if (!ctx.body) {
         ctx.body = { error: "That's a 404 :(" }
       }
