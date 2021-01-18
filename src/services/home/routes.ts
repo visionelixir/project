@@ -1,4 +1,4 @@
-import { RouterFacade as Router } from '@visionelixir/framework/dist/services/router/facades/RouterFacade'
+import { RouterFacade as Router } from '@visionelixir/framework'
 import { HomeMiddleware } from './middleware/home'
 
 export default () => {

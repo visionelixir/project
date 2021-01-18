@@ -4,7 +4,7 @@ import {
   VisionElixirEvent,
   VisionElixirLocalEvents,
 } from '@visionelixir/framework'
-import { websiteErrorHandler } from './utils/errorHandler'
+import { websiteErrorHandler } from './utils/error-handler'
 import { ZoneFacade as Zone } from '@visionelixir/framework/dist/services/zone/facades/ZoneFacade'
 import { LoggerFacade as Logger } from '@visionelixir/framework/dist/services/logging/facades/LoggerFacade'
 import { CollectorFacade as Collector } from '@visionelixir/framework/dist/services/collector/facades/CollectorFacade'

@@ -19,7 +19,7 @@ export class HomeMiddleware {
 
   public static info(): Middleware {
     return async (ctx: Context): Promise<void> => {
-      await Database.get().query(`SELECT * FROM accounts`)
+      await Database.get().query(`SELECT * FROM accounts`, [], 'Get Accounts')
 
       ctx.body = { name: App.getConfig().name }
     }
