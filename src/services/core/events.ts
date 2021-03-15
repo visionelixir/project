@@ -1,7 +1,7 @@
 import {
   Context,
   VisionElixirEvent,
-  VisionElixirLocalEvents,
+  VisionElixirRequestEvents,
   EmitterFacade as Emitter,
   ZoneFacade as Zone,
   LoggerFacade as Logger,
@@ -11,7 +11,7 @@ import { websiteErrorHandler } from './utils/error-handler'
 
 export default (): void => {
   Emitter.on(
-    VisionElixirLocalEvents.RESPONSE_ERROR,
+    VisionElixirRequestEvents.RESPONSE_ERROR,
     async (event: VisionElixirEvent): Promise<void> => {
       const { status, ctx, error } = event.getData()
 
@@ -20,7 +20,7 @@ export default (): void => {
   )
 
   Emitter.on(
-    VisionElixirLocalEvents.RESPONSE_POST,
+    VisionElixirRequestEvents.RESPONSE_POST,
     async (event: VisionElixirEvent) => {
       const { ctx }: { ctx: Context } = event.getData()
       const { method, href, url, protocol, ip: remoteIp } = ctx.request
@@ -36,7 +36,7 @@ export default (): void => {
       const zoneId = Zone.getCurrentZone().get('id')
 
       await Emitter.emit(
-        VisionElixirLocalEvents.APP_DATA,
+        VisionElixirRequestEvents.APP_DATA,
         new VisionElixirEvent({
           collection: 'request',
           payload: {

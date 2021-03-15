@@ -3,6 +3,7 @@ import {
   Environment,
   EnvironmentCasts,
   LoggingDriver,
+  AppType,
 } from '@visionelixir/framework'
 import * as path from 'path'
 import { DATABASE_CONFIG } from './database'
@@ -10,6 +11,8 @@ import { VIEW_CONFIG } from './view'
 import { SERVICES_CONFIG } from './services'
 
 export const APP_CONFIG: VisionElixirConfig = {
+  type: AppType.APP,
+
   name: Environment.get('NAME', 'App'),
 
   host: Environment.get('HOST', 'http://localhost'),

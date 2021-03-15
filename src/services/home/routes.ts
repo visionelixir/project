@@ -1,5 +1,5 @@
 import { RouterFacade as Router } from '@visionelixir/framework'
-import { HomeMiddleware } from './middleware/home'
+import { HomeMiddleware } from './middleware/HomeMiddleware'
 
 export default (): void => {
   Router.get('', [HomeMiddleware.view()])
