@@ -8,17 +8,19 @@ import {
   ViewFacade as View,
   AppFacade as App,
   DatabaseFacade as Database,
+  HttpStatus,
 } from '@visionelixir/framework'
 
 export class HomeMiddleware {
-  public static responseError(code: number): Middleware {
+  public static responseError(code: HttpStatus): Middleware {
     return async (ctx: Context): Promise<void> => {
       throw new VisionElixirError(`This is a forced ${code}`, {
         passThrough: !!ctx.query.pass,
         passThroughMessage: `This is a ${
           ctx.query.pass || Config.debug ? 'pass through forced ' : ''
         }${code}`,
-        payload: { meta: 'this is error meta' },
+        payload: { meta: 'this is meta' },
+        passThroughPayload: { meta: 'this is pass through meta' },
         status: code,
       })
     }

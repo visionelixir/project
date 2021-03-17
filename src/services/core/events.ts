@@ -19,9 +19,9 @@ export default (): void => {
       let result: ErrorHandlerResult
 
       if (Config.debug) {
-        result = await ErrorHandler.websiteDebug(status, error)
+        result = await ErrorHandler.apiDebug(status, error)
       } else {
-        result = await ErrorHandler.website(status, error)
+        result = await ErrorHandler.api(status, error)
       }
 
       ctx.body = result.body

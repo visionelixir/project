@@ -3,6 +3,7 @@ import {
   ViewFacade as View,
   VisionElixirError,
   HttpStatus,
+  LoggerFacade,
 } from '@visionelixir/framework'
 import { ErrorHandlerResult } from '../types'
 
@@ -37,23 +38,34 @@ export class ErrorHandler {
     const status = error?.getOptions()?.status || statusCode
     let body: string
 
-    switch (statusCode) {
-      case 500:
-        body = View.render('errors/500', {
-          page: { title: 'Uh oh...', name: errorBody.message },
-        })
+    try {
+      switch (statusCode) {
+        case 500:
+          body = View.render('errors/500', {
+            page: { title: 'Uh oh...', name: errorBody.message },
+          })
 
-        break
-      case 404:
-        body = View.render('errors/404', {
-          page: { title: 'Uh oh...', name: 'That page was not found...' },
-        })
+          break
+        case 404:
+          body = View.render('errors/404', {
+            page: {
+              title: 'Uh oh...',
+              name: 'Sorry, that page was not found...',
+            },
+          })
 
-        break
-      default:
-        body = View.render('errors/error', {
-          page: { title: 'Uh oh...', name: errorBody.message },
-        })
+          break
+        default:
+          body = View.render('errors/error', {
+            page: { title: 'Uh oh...', name: errorBody.message },
+          })
+      }
+    } catch (caughtError) {
+      LoggerFacade.critical('ErrorHandler', caughtError.message, {
+        error: caughtError,
+      })
+
+      throw caughtError
     }
 
     return {
@@ -78,11 +90,36 @@ export class ErrorHandler {
       }
     }
 
-    return {
-      body: View.render('errors/debug', {
+    let view: string
+
+    try {
+      view = View.render('errors/debug', {
         page: { title: 'Uh oh...' },
-        error,
-      }),
+        error: {
+          type: error.getType(),
+          name: error.getName(),
+          message: error.getMessage(),
+          isPassThrough: error.isPassThrough(),
+          passThroughMessage: error.getPassThroughMessage(),
+          payload: JSON.stringify(error.getPayload(), null, 2),
+          passThroughPayload: JSON.stringify(
+            error.getPassThroughPayload(),
+            null,
+            2,
+          ),
+          stack: error.getStack(),
+        },
+      })
+    } catch (caughtError) {
+      LoggerFacade.critical('ErrorHandler', caughtError.message, {
+        error: caughtError,
+      })
+
+      throw caughtError
+    }
+
+    return {
+      body: view,
       status,
     }
   }
@@ -117,7 +154,7 @@ export class ErrorHandler {
         errorBody.message
 
       if (error?.getPayload()) {
-        errorBody.payload = error.getPayload()
+        errorBody.payload = error?.getPassThroughPayload()
       }
     }
 
@@ -141,14 +178,20 @@ export class ErrorHandler {
 
     const errorBody: {
       message: string
+      passThroughMessage?: string
       type?: string
       name?: string
       payload?: KeyValue
+      passThroughPayload?: KeyValue
+      stack?: string
     } = {
       type: error?.getType(),
       name: error?.getName(),
-      message: error?.getPassThroughMessage() || error?.getMessage(),
+      message: error?.getMessage(),
+      passThroughMessage: error?.getPassThroughMessage(),
       payload: error?.getPayload(),
+      passThroughPayload: error?.getPassThroughPayload(),
+      stack: error?.getStack(),
     }
 
     return {
