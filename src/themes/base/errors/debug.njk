@@ -1,0 +1,12 @@
+{% extends "../master.njk" %}
+
+{% block page %}
+    <section class="center-box">
+        <h1 class="header">Debug Error</h1>
+        <div class="debug-item">Type: {{ error.getType() }}</div>
+        <div class="debug-item">Name: {{ error.getName() }}</div>
+        <div class="debug-item">Message: {{ error.getMessage() }}</div>
+        <div class="debug-item">Pass-through Message: {{ error.getPassThroughMessage() }}</div>
+        <div class="debug-item">Stack: <pre>{{ error.getStack() }}</pre></div>
+    </section>
+{% endblock %}

@@ -11,9 +11,22 @@ import {
 } from '@visionelixir/framework'
 
 export class HomeMiddleware {
-  public static response500(): Middleware {
+  public static responseError(code: number): Middleware {
+    return async (ctx: Context): Promise<void> => {
+      throw new VisionElixirError(`This is a forced ${code}`, {
+        passThrough: !!ctx.query.pass,
+        passThroughMessage: `This is a ${
+          ctx.query.pass || Config.debug ? 'pass through forced ' : ''
+        }${code}`,
+        payload: { meta: 'this is error meta' },
+        status: code,
+      })
+    }
+  }
+
+  public static error(): Middleware {
     return async (): Promise<void> => {
-      throw new VisionElixirError('Oh noes :(', 'I just blew my payload')
+      throw new VisionElixirError(`This is my highly detailed error :(`)
     }
   }
 

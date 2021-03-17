@@ -6,16 +6,26 @@ import {
   ZoneFacade as Zone,
   LoggerFacade as Logger,
   CollectorFacade as Collector,
+  ConfigFacade as Config,
 } from '@visionelixir/framework'
-import { websiteErrorHandler } from './utils/error-handler'
+import { ErrorHandler } from './utils/ErrorHandler'
+import { ErrorHandlerResult } from './types'
 
 export default (): void => {
   Emitter.on(
     VisionElixirRequestEvents.RESPONSE_ERROR,
     async (event: VisionElixirEvent): Promise<void> => {
-      const { status, ctx, error } = event.getData()
+      const { status, error, ctx } = event.getData()
+      let result: ErrorHandlerResult
 
-      await websiteErrorHandler(status, error, ctx)
+      if (Config.debug) {
+        result = await ErrorHandler.websiteDebug(status, error)
+      } else {
+        result = await ErrorHandler.website(status, error)
+      }
+
+      ctx.body = result.body
+      ctx.status = result.status
     },
   )
 
