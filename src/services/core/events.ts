@@ -19,9 +19,16 @@ export default (): void => {
       let result: ErrorHandlerResult
 
       if (Config.debug) {
-        result = await ErrorHandler.apiDebug(status, error)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        result = await ErrorHandler[`${Config.errorHandling}Debug`](
+          status,
+          error,
+        )
       } else {
-        result = await ErrorHandler.api(status, error)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        result = await ErrorHandler[`${Config.errorHandling}`](status, error)
       }
 
       ctx.body = result.body

@@ -9,6 +9,7 @@ import * as path from 'path'
 import { DATABASE_CONFIG } from './database'
 import { VIEW_CONFIG } from './view'
 import { SERVICES_CONFIG } from './services'
+import { ErrorResponse } from '../services/core/types'
 
 export const APP_CONFIG: VisionElixirConfig = {
   type: AppType.APP,
@@ -21,6 +22,8 @@ export const APP_CONFIG: VisionElixirConfig = {
   debug: Environment.get('DEBUG', false, EnvironmentCasts.BOOLEAN),
 
   baseDirectory: path.normalize(`${__dirname}/..`),
+
+  errorHandling: ErrorResponse.API,
 
   static: {
     directory: 'public',

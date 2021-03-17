@@ -15,7 +15,7 @@ export class HomeMiddleware {
   public static responseError(code: HttpStatus): Middleware {
     return async (ctx: Context): Promise<void> => {
       throw new VisionElixirError(`This is a forced ${code}`, {
-        passThrough: !!ctx.query.pass,
+        passThrough: ctx.query.pass === 'true',
         passThroughMessage: `This is a ${
           ctx.query.pass || Config.debug ? 'pass through forced ' : ''
         }${code}`,

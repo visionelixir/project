@@ -22,7 +22,7 @@
     "build": "npm run lint && npm test && npm run build:clear && npm run typescript:build && npm run scss:build && npm run views:build && npm run environment:build && npm run public:build"
   },
   "dependencies": {
-    "@visionelixir/framework": "0.2.2"
+    "@visionelixir/framework": "0.2.3"
   },
   "devDependencies": {
     "@types/koa": "^2.13.1",

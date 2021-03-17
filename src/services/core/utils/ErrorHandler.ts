@@ -1,9 +1,9 @@
 import {
+  HttpStatus,
   KeyValue,
+  LoggerFacade,
   ViewFacade as View,
   VisionElixirError,
-  HttpStatus,
-  LoggerFacade,
 } from '@visionelixir/framework'
 import { ErrorHandlerResult } from '../types'
 
@@ -22,20 +22,17 @@ export class ErrorHandler {
       message: `Sorry, that's an error.`,
     }
 
-    if (error?.isPassThrough()) {
-      errorBody.type = error?.getType()
-      errorBody.name = error?.getName()
-      errorBody.message =
-        error?.getPassThroughMessage() ||
-        error?.getMessage() ||
-        errorBody.message
+    if (error.isPassThrough()) {
+      errorBody.type = error.getType()
+      errorBody.name = error.getName()
+      errorBody.message = error.getPassThroughMessage() || error.getMessage()
 
-      if (error?.getPayload()) {
+      if (error.getPayload()) {
         errorBody.payload = error.getPayload()
       }
     }
 
-    const status = error?.getOptions()?.status || statusCode
+    const status = error.getOptions()?.status || statusCode
     let body: string
 
     try {
@@ -79,13 +76,16 @@ export class ErrorHandler {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     error: VisionElixirError<any>,
   ): Promise<ErrorHandlerResult> {
-    const status = error?.getOptions()?.status || statusCode
+    const status = error.getOptions()?.status || statusCode
 
     if (statusCode === HttpStatus.NOT_FOUND) {
       return {
         status,
         body: View.render('errors/404', {
-          page: { title: 'Uh oh...', name: 'That was not found' },
+          page: {
+            title: 'Uh oh...',
+            name: 'Sorry, that page was not found...',
+          },
         }),
       }
     }
@@ -127,15 +127,8 @@ export class ErrorHandler {
   public static async api(
     statusCode: HttpStatus,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    error: VisionElixirError<any> | null,
+    error: VisionElixirError<any>,
   ): Promise<ErrorHandlerResult> {
-    if (statusCode === HttpStatus.NOT_FOUND && !error) {
-      return {
-        body: { success: false, error: 'Not found' },
-        status: statusCode,
-      }
-    }
-
     const errorBody: {
       message: string
       type?: string
@@ -145,22 +138,20 @@ export class ErrorHandler {
       message: `Sorry, that's an error.`,
     }
 
-    if (error?.isPassThrough()) {
-      errorBody.type = error?.getType()
-      errorBody.name = error?.getName()
+    if (error.isPassThrough()) {
+      errorBody.type = error.getType()
+      errorBody.name = error.getName()
       errorBody.message =
-        error?.getPassThroughMessage() ||
-        error?.getMessage() ||
-        errorBody.message
+        error.getPassThroughMessage() || error.getMessage() || errorBody.message
 
-      if (error?.getPayload()) {
-        errorBody.payload = error?.getPassThroughPayload()
+      if (error.getPayload()) {
+        errorBody.payload = error.getPassThroughPayload()
       }
     }
 
     return {
       body: { success: false, error: errorBody },
-      status: error?.getOptions()?.status || statusCode,
+      status: error.getOptions()?.status || statusCode,
     }
   }
 
@@ -169,13 +160,6 @@ export class ErrorHandler {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     error: VisionElixirError<any>,
   ): Promise<ErrorHandlerResult> {
-    if (statusCode === HttpStatus.NOT_FOUND && !error) {
-      return {
-        body: { error: 'Not found' },
-        status: statusCode,
-      }
-    }
-
     const errorBody: {
       message: string
       passThroughMessage?: string
@@ -185,18 +169,18 @@ export class ErrorHandler {
       passThroughPayload?: KeyValue
       stack?: string
     } = {
-      type: error?.getType(),
-      name: error?.getName(),
-      message: error?.getMessage(),
-      passThroughMessage: error?.getPassThroughMessage(),
-      payload: error?.getPayload(),
-      passThroughPayload: error?.getPassThroughPayload(),
-      stack: error?.getStack(),
+      type: error.getType(),
+      name: error.getName(),
+      message: error.getMessage(),
+      passThroughMessage: error.getPassThroughMessage(),
+      payload: error.getPayload(),
+      passThroughPayload: error.getPassThroughPayload(),
+      stack: error.getStack(),
     }
 
     return {
       body: { success: false, error: errorBody },
-      status: error?.getOptions()?.status || statusCode,
+      status: error.getOptions()?.status || statusCode,
     }
   }
 }
