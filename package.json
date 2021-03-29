@@ -22,15 +22,14 @@
     "build": "npm run lint && npm test && npm run build:clear && npm run typescript:build && npm run scss:build && npm run views:build && npm run environment:build && npm run public:build"
   },
   "dependencies": {
-    "@green-brain/helpers_library": "^1.5.0",
-    "@visionelixir/framework": "0.2.4"
+    "@visionelixir/framework": "0.4.1"
   },
   "devDependencies": {
     "@types/koa": "^2.13.1",
     "@types/koa-static": "^4.0.1",
-    "@typescript-eslint/eslint-plugin": "^4.18.0",
-    "@typescript-eslint/parser": "^4.18.0",
-    "eslint": "^7.22.0",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "@typescript-eslint/parser": "^4.20.0",
+    "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "jest": "^26.6.3",
@@ -38,7 +37,7 @@
     "prettier": "^2.2.1",
     "ts-jest": "^26.5.4",
     "ts-node": "^9.1.1",
-    "typescript": "^4.2.3",
-    "ts-node-dev": "^1.1.6"
+    "ts-node-dev": "^1.1.6",
+    "typescript": "^4.2.3"
   }
 }

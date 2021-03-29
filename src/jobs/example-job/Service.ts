@@ -1,8 +1,9 @@
-import { LoggerFacade as Logger, Service } from '@visionelixir/framework'
 import {
   Emitter,
   Event,
   VisionElixirApplicationEvents,
+  LoggerFacade as Logger,
+  Service,
 } from '@visionelixir/framework'
 import { ExampleJobMiddleware } from './middleware/ExampleJobMiddleware'
 

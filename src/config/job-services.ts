@@ -1,6 +1,6 @@
 export const JOB_SERVICES_CONFIG = {
   file: 'Service',
-  directory: 'services',
+  directory: 'jobs',
   require: {
     visionElixir: [
       'container',
